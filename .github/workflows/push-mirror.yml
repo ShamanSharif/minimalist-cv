@@ -2,7 +2,7 @@ name: Push to AWS CodeCommit Mirror
 
 on:
   push:
-    branches-ignore:
+    branches:
       - '*'
 
 jobs:
