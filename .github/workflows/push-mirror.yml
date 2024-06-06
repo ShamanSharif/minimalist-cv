@@ -21,6 +21,13 @@ jobs:
           aws-region: us-east-1
 
       - name: Push to AWS CodeCommit
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa git-codecommit.us-east-1.amazonaws.com >> ~/.ssh/known_hosts
+
           git remote add codecommit ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/shamansharif-minimalist-cv
           git push --mirror codecommit
